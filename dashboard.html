@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseBoard - Dashboard</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0b1220',
+                        accent: '#06b6d4',
+                        'accent-hover': '#0891b2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+    <!-- Header -->
+    <header class="bg-white shadow-sm border-b">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center">
+                    <img src="assets/logo.png" alt="PulseBoard" class="w-8 h-8 mr-3">
+                    <h1 class="text-xl font-semibold text-gray-900">PulseBoard</h1>
+                </div>
+                
+                <div class="flex items-center space-x-4">
+                    <!-- Role Toggle -->
+                    <div class="flex items-center space-x-2">
+                        <span class="text-sm text-gray-600">Role:</span>
+                        <select id="roleToggle" class="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-accent">
+                            <option value="admin">Admin</option>
+                            <option value="viewer">Viewer</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Simulation Toggle -->
+                    <button id="simulationToggle" class="bg-accent text-white px-3 py-1 rounded text-sm hover:bg-accent-hover transition-colors">
+                        Pause Simulation
+                    </button>
+                    
+                    <!-- User Info -->
+                    <div class="flex items-center space-x-2">
+                        <img id="userAvatar" src="assets/avatar-admin.png" alt="User" class="w-8 h-8 rounded-full">
+                        <span id="userName" class="text-sm font-medium text-gray-700"></span>
+                    </div>
+                    
+                    <!-- Logout -->
+                    <button id="logoutBtn" class="text-sm text-gray-600 hover:text-gray-900 transition-colors">
+                        Logout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Metrics Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="metric-card bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Active Users</p>
+                        <p id="activeUsers" class="text-2xl font-bold text-gray-900">1,234</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center text-sm">
+                    <span class="text-green-600 font-medium">+12%</span>
+                    <span class="text-gray-600 ml-1">from last week</span>
+                </div>
+            </div>
+
+            <div class="metric-card bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Revenue</p>
+                        <p id="revenue" class="text-2xl font-bold text-gray-900">$45,231</p>
+                    </div>
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center text-sm">
+                    <span class="text-green-600 font-medium">+8%</span>
+                    <span class="text-gray-600 ml-1">from last month</span>
+                </div>
+            </div>
+
+            <div class="metric-card bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Conversion Rate</p>
+                        <p id="conversionRate" class="text-2xl font-bold text-gray-900">3.24%</p>
+                    </div>
+                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center text-sm">
+                    <span class="text-red-600 font-medium">-2%</span>
+                    <span class="text-gray-600 ml-1">from last week</span>
+                </div>
+            </div>
+
+            <div class="metric-card bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Sessions</p>
+                        <p id="totalSessions" class="text-2xl font-bold text-gray-900">89,432</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v4a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-2 flex items-center text-sm">
+                    <span class="text-green-600 font-medium">+15%</span>
+                    <span class="text-gray-600 ml-1">from last month</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Active Users Chart -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Active Users Over Time</h3>
+                    <button class="admin-only edit-btn text-sm text-accent hover:text-accent-hover transition-colors">Edit</button>
+                </div>
+                <canvas id="activeUsersChart" width="400" height="200"></canvas>
+            </div>
+
+            <!-- Revenue Chart -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Daily Revenue</h3>
+                    <button class="admin-only edit-btn text-sm text-accent hover:text-accent-hover transition-colors">Edit</button>
+                </div>
+                <canvas id="revenueChart" width="400" height="200"></canvas>
+            </div>
+        </div>
+
+        <!-- User Roles Chart and Activity Feed -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <!-- User Roles Donut Chart -->
+            <div class="bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">User Roles</h3>
+                    <button class="admin-only edit-btn text-sm text-accent hover:text-accent-hover transition-colors">Edit</button>
+                </div>
+                <canvas id="userRolesChart" width="300" height="300"></canvas>
+            </div>
+
+            <!-- Activity Feed -->
+            <div class="lg:col-span-2 bg-white rounded-lg shadow p-6">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-lg font-semibold text-gray-900">Recent Activity</h3>
+                    <button class="admin-only edit-btn text-sm text-accent hover:text-accent-hover transition-colors">Manage</button>
+                </div>
+                <div id="activityFeed" class="space-y-4 max-h-80 overflow-y-auto">
+                    <!-- Activity items will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- User List Table -->
+        <div class="mt-8 bg-white rounded-lg shadow">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-lg font-semibold text-gray-900">User Management</h3>
+                    <button class="admin-only edit-btn bg-accent text-white px-4 py-2 rounded hover:bg-accent-hover transition-colors">Add User</button>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="name">
+                                Name
+                                <svg class="inline w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="email">
+                                Email
+                                <svg class="inline w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="role">
+                                Role
+                                <svg class="inline w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer hover:bg-gray-100" data-sort="status">
+                                Status
+                                <svg class="inline w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                </svg>
+                            </th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="userTableBody" class="bg-white divide-y divide-gray-200">
+                        <!-- Table rows will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Notification Container -->
+    <div id="notificationContainer" class="fixed top-4 right-4 z-50 space-y-2">
+        <!-- Notifications will be added here -->
+    </div>
+
+    <script src="scripts/dashboard.js"></script>
+</body>
+</html>

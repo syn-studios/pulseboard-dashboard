@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PulseBoard - Login</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0b1220',
+                        accent: '#06b6d4',
+                        'accent-hover': '#0891b2'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-primary min-h-screen flex items-center justify-center">
+    <div class="bg-white rounded-lg shadow-xl p-8 w-full max-w-md">
+        <div class="text-center mb-8">
+            <img src="assets/logo.png" alt="PulseBoard Logo" class="mx-auto mb-4 w-16 h-16">
+            <h1 class="text-2xl font-bold text-gray-900">PulseBoard</h1>
+            <p class="text-gray-600 mt-2">Real-time Analytics Dashboard</p>
+        </div>
+
+        <form id="loginForm" class="space-y-6">
+            <div>
+                <label for="username" class="block text-sm font-medium text-gray-700 mb-2">Username</label>
+                <input 
+                    type="text" 
+                    id="username" 
+                    name="username"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="Enter username"
+                    required
+                >
+            </div>
+            
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                <input 
+                    type="password" 
+                    id="password" 
+                    name="password"
+                    class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent"
+                    placeholder="Enter password"
+                    required
+                >
+            </div>
+
+            <button 
+                type="submit"
+                class="w-full bg-accent hover:bg-accent-hover text-white font-medium py-2 px-4 rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-accent focus:ring-offset-2"
+            >
+                Sign In
+            </button>
+        </form>
+
+        <div class="mt-6 p-4 bg-gray-50 rounded-md">
+            <h3 class="text-sm font-medium text-gray-700 mb-2">Demo Accounts:</h3>
+            <div class="text-xs text-gray-600 space-y-1">
+                <div><strong>Admin:</strong> admin / admin123</div>
+                <div><strong>Viewer:</strong> viewer / viewer123</div>
+            </div>
+        </div>
+
+        <div id="errorMessage" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded hidden">
+            Invalid credentials. Please try again.
+        </div>
+    </div>
+
+    <script>
+        // Mock authentication
+        const validCredentials = {
+            'admin': { password: 'admin123', role: 'admin' },
+            'viewer': { password: 'viewer123', role: 'viewer' }
+        };
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('errorMessage');
+            
+            if (validCredentials[username] && validCredentials[username].password === password) {
+                // Store user session
+                localStorage.setItem('pulseboardUser', JSON.stringify({
+                    username: username,
+                    role: validCredentials[username].role,
+                    loginTime: new Date().toISOString()
+                }));
+                
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            } else {
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        });
+
+        // Check if already logged in
+        if (localStorage.getItem('pulseboardUser')) {
+            window.location.href = 'dashboard.html';
+        }
+    </script>
+</body>
+</html>
