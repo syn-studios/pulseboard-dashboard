@@ -20,6 +20,25 @@
             }
         }
     </script>
+    <!-- Added CSS to constrain chart canvas heights -->
+    <style>
+        .chart-container {
+            position: relative;
+            height: 300px;
+            width: 100%;
+        }
+        .chart-container canvas {
+            max-height: 300px !important;
+        }
+        .donut-chart-container {
+            position: relative;
+            height: 250px;
+            width: 100%;
+        }
+        .donut-chart-container canvas {
+            max-height: 250px !important;
+        }
+    </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
     <!-- Header -->
