@@ -36,7 +36,7 @@
       "email": "john.doe@example.com",
       "role": "Admin",
       "status": "Active",
-      "avatar": "assets/avatar-1.png"
+      "avatar": "assets/avatar-5.png"
     },
     {
       "id": 2,
@@ -44,7 +44,7 @@
       "email": "jane.smith@example.com",
       "role": "Editor",
       "status": "Active",
-      "avatar": "assets/avatar-2.png"
+      "avatar": "assets/avatar-4.png"
     },
     {
       "id": 3,
@@ -52,7 +52,7 @@
       "email": "mike.johnson@example.com",
       "role": "Viewer",
       "status": "Inactive",
-      "avatar": "assets/avatar-3.png"
+      "avatar": "assets/avatar-5.png"
     },
     {
       "id": 4,
